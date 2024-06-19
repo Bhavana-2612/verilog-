@@ -1,0 +1,42 @@
+module u_s_r (
+    input wire clk,         // Clock input 
+    input wire clear,       //  clear signal
+    input wire [1:0] sel,   // Select lines for mode
+    input wire [7:0] in,    // Parallel input data
+    input wire s_in,        // Serial input data
+    output reg [7:0] d_out  // Output data
+);
+
+// Mode 
+localparam HOLD        = 2'b00; // Hold current state
+localparam LOAD        = 2'b01; // Load parallel data
+localparam SHIFT_LEFT  = 2'b10; // Shift left
+localparam SHIFT_RIGHT = 2'b11; // Shift right
+
+// Sequential logic for the Universal Shift Register
+always @(posedge clk or posedge clear) begin
+if (clear) begin
+d_out <= 8'b0;       //  reset: Clear output to 0
+end else begin
+        // Case statement based on select lines (sel)
+        case (sel)
+            HOLD: begin
+                d_out <= d_out; // Hold current state: Output remains unchanged
+            end
+            LOAD: begin
+                d_out <= in;    // Load parallel data: Output becomes parallel input (in)
+            end
+            SHIFT_LEFT: begin
+                d_out <= {d_out[6:0], s_in}; // Shift left: Output shifts left, s_in shifts into LSB
+            end
+            SHIFT_RIGHT: begin
+                d_out <= {s_in, d_out[7:1]}; // Shift right: Output shifts right, s_in shifts into MSB
+            end
+            default: begin
+                d_out <= d_out; // Default case : Output remains unchanged
+            end
+        endcase
+    end
+end
+
+endmodule

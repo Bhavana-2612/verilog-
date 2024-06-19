@@ -1,0 +1,18 @@
+module deco (
+    output reg [3:0] y,    // 4-bit output y
+    input [1:0] in         // 2-bit input in
+);
+
+// Combinational logic for decoding
+always @(*) begin
+    // Case statement based on input 'in'
+    case (in)
+        2'b00 : y = 4'b0001;   // If in = 2'b00, output y = 4'b0001
+        2'b01 : y = 4'b0010;   // If in = 2'b01, output y = 4'b0010
+        2'b10 : y = 4'b0100;   // If in = 2'b10, output y = 4'b0100
+        2'b11 : y = 4'b1000;   // If in = 2'b11, output y = 4'b1000
+        default : y = 4'bxxxx; // Default case: Output is 'xxxx' 
+    endcase
+end
+
+endmodule

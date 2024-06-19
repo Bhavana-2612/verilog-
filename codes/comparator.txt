@@ -1,0 +1,25 @@
+module comp_four (
+    input [3:0] a,        // 4-bit input A
+    input [3:0] b,        // 4-bit input B
+    output reg agb,    // Output 1 if A > B
+    output reg alb,    // Output 1 if A < B
+    output reg aeb     // Output 1 if A == B
+);
+
+// Combinational logic to compare inputs A and B
+always @(*) begin
+    // Initialize outputs
+    agb = 0;  // Output for A > B
+    alb = 0;  // Output for A < B
+    aeb = 0;  // Output for A == B
+    
+    // Compare A and B
+    if (a > b)
+        agb = 1;  // Set agb to 1 if A is greater than B
+    else if (a < b)
+        alb = 1;  // Set alb to 1 if A is less than B
+    else
+        aeb = 1;  // Set aeb to 1 if A is equal to B
+end
+
+endmodule

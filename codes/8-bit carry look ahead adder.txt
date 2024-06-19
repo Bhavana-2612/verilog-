@@ -1,0 +1,28 @@
+module c_a (
+    input [7:0] A, B,    // 8-bit inputs A and B
+    input Cin,           // Carry-in input
+    output [7:0] Sum,    // 8-bit sum output
+    output Cout          // Carry-out output
+);
+    wire [7:0] P, G;     // Propagate and Generate
+    wire [7:0] C;        // Carry
+
+    // Propagate and Generate
+    assign P = A ^ B;    // P[i] is true if A[i] XOR B[i]
+    assign G = A & B;    // G[i] is true if A[i] AND B[i]
+
+    // Carry Look-Ahead Logic
+    assign C[0] = Cin;   // Initial carry-in
+    assign C[1] = G[0] | (P[0] & C[0]); // Generate carry for bit 1
+    assign C[2] = G[1] | (P[1] & C[1]); // Generate carry for bit 2
+    assign C[3] = G[2] | (P[2] & C[2]); // Generate carry for bit 3
+    assign C[4] = G[3] | (P[3] & C[3]); // Generate carry for bit 4
+    assign C[5] = G[4] | (P[4] & C[4]); // Generate carry for bit 5
+    assign C[6] = G[5] | (P[5] & C[5]); // Generate carry for bit 6
+    assign C[7] = G[6] | (P[6] & C[6]); // Generate carry for bit 7
+    assign Cout = G[7] | (P[7] & C[7]); // Generate carry for bit 8 (output carry)
+
+    // Sum Calculation
+    assign Sum = P ^ {C[6:0], Cin};    // Sum calculation using the carry
+
+endmodule

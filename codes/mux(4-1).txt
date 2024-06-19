@@ -1,0 +1,18 @@
+module mux_4to1 (
+    input [3:0] data_in,   // 4-bit input data
+    input [1:0] sel,       // 2-bit select input
+    output reg data_out    // Output 
+);
+
+// Combinational logic for multiplexer
+always @(*) begin
+    case (sel)
+        2'b00: data_out = data_in[0];   // Select input 00: Output data_in[0]
+        2'b01: data_out = data_in[1];   // Select input 01: Output data_in[1]
+        2'b10: data_out = data_in[2];   // Select input 10: Output data_in[2]
+        2'b11: data_out = data_in[3];   // Select input 11: Output data_in[3]
+        default: data_out = 1'bx;       // Default case: Output is 'x'
+    endcase
+end
+
+endmodule

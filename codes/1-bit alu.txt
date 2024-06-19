@@ -1,0 +1,20 @@
+module alu_one (
+input a, b,              // Inputs
+input [2:0] sel,         // Select lines
+output reg y             // Output
+);
+always @ (*)
+begin
+case(sel)
+3'b000 : y = a & b;      // Bitwise AND operation
+3'b001 : y = a | b;      // Bitwise OR operation
+3'b010 : y = a + b;      // Addition operation
+3'b011 : y = a - b;      // Subtraction operation
+3'b100 : y = ~a;         // Bitwise NOT operation on 'a'
+3'b101 : y = ~b;         // Bitwise NOT operation on 'b'
+3'b110 : y = a ^ b;      // Bitwise XOR operation
+3'b111 : y = ~(a & b);   // NAND operation
+default : y = 1'bx;      // Default output 
+endcase
+end
+endmodule

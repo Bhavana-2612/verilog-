@@ -1,0 +1,28 @@
+module alu_eight (
+    input [7:0] a, b,         // Inputs
+    input [3:0] sel,          // Select lines
+    output reg [7:0] y        // Output
+);
+always @ (*)
+begin
+case(sel)
+4'b0000 : y = a & b;                    // Bitwise AND operation
+4'b0001 : y = a | b;                    // Bitwise OR operation
+4'b0010 : y = a + b;                    // Addition operation
+4'b0011 : y = a - b;                    // Subtraction operation
+4'b0100 : y = ~a;                       // Bitwise NOT operation on 'a'
+4'b0101 : y = ~b;                       // Bitwise NOT operation on 'b'
+4'b0110 : y = a ^ b;                    // Bitwise XOR operation
+4'b0111 : y = ~(a & b);                 // NAND operation
+4'b1000 : y = ~(a | b);                 // NOR operation
+4'b1001 : y = a << 1;                   // Shift 'a' left by 1 bit 
+4'b1010 : y = a >> 1;                   // Shift 'a' right by 1 bit 
+4'b1011 : y = ~(a ^ b);                 // XNOR operation
+4'b1100 : y = {a[6:0], a[7]};            // Rotate 'a' left by 1 bit
+4'b1101 : y = {a[0], a[7:1]};           // Rotate 'a' right by 1 bit
+4'b1110 : y = (a > b) ? 8'd1 : 8'd0;    // Greater than comparison
+4'b1111 : y = (a == b) ? 8'd1 : 8'd0;  // Equality comparison
+default : y = 8'bx;                     // Default output 
+endcase
+end
+endmodule
