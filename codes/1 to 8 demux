@@ -1,0 +1,21 @@
+module demux1to8(
+    input wire in,         // Input
+    input wire [2:0] sel,  // 3-bit select signal
+    output wire [7:0] out  // 8 outputs
+);
+    assign out = 8'b00000000; // Initialize all outputs to 0
+
+    always @(*) begin
+        case(sel)
+            3'b000: out = {7'b0000000, in}; // out[0] = in
+            3'b001: out = {6'b000000, in, 1'b0}; // out[1] = in
+            3'b010: out = {5'b00000, in, 2'b00}; // out[2] = in
+            3'b011: out = {4'b0000, in, 3'b000}; // out[3] = in
+            3'b100: out = {3'b000, in, 4'b0000}; // out[4] = in
+            3'b101: out = {2'b00, in, 5'b00000}; // out[5] = in
+            3'b110: out = {1'b0, in, 6'b000000}; // out[6] = in
+            3'b111: out = {in, 7'b0000000}; // out[7] = in
+            default: out = 8'b00000000; // Default case to reset outputs
+        endcase
+    end
+endmodule
