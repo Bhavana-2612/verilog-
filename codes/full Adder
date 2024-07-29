@@ -1,0 +1,35 @@
+module full_adder(
+    input a, 
+    input b, 
+    input cin, // Carry input
+    output sum, 
+    output cout // Carry output
+);
+    wire s1, c1, c2;
+
+    half_adder ha1 (
+        .a(a),
+        .b(b),
+        .sum(s1),
+        .carry(c1)
+    );
+
+    half_adder ha2 (
+        .a(s1),
+        .b(cin),
+        .sum(sum),
+        .carry(c2)
+    );
+
+    assign cout = c1 | c2; // Carry output is the OR of the two carries
+endmodule
+
+module half_adder(
+    input a, 
+    input b, 
+    output sum, 
+    output carry
+);
+    assign sum = a ^ b; // Sum is the XOR of a and b
+    assign carry = a & b; // Carry is the AND of a and b
+endmodule
