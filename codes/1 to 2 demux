@@ -1,0 +1,9 @@
+module demux1to2(
+    input wire in,        // Input
+    input wire sel,       // Select signal
+    output wire out0,     // Output 0
+    output wire out1      // Output 1
+);
+    assign out0 = (sel) ? 1'b0 : in; // If sel is 0, route in to out0; otherwise, out0 is 0
+    assign out1 = (sel) ? in : 1'b0; // If sel is 1, route in to out1; otherwise, out1 is 0
+endmodule
